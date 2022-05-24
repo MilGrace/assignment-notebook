@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad()
     
     {
+        loadData()
         super.viewDidLoad()
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -32,6 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cellList.append(name)
         myTableView.reloadData()
         myTextField.text = ""
+        saveData()
     }
     
     
@@ -51,6 +53,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    func saveData()
+    {
+        let defaults = UserDefaults.standard
+        defaults.setValue(cellList, forKey: "assignments")
+    }
+    
+    func loadData()
+    {
+        let defaults = UserDefaults.standard
+       if let data = defaults.array(forKey: "assignments")
+       {
+        cellList = data as! [String]
+       }
+        
+    }
 
 
 }
