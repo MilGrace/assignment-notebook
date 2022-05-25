@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var myTableView: UITableView!
     
     var cellList = ["Finish homework","Delete emails","Fill out application"]
-    
+    var completeList = [false, false, false]
     override func viewDidLoad()
     
     {
@@ -31,12 +31,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         let name = myTextField.text!
         cellList.append(name)
+        completeList.append(false)
         myTableView.reloadData()
         myTextField.text = ""
         saveData()
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
@@ -50,8 +55,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let item = cellList[indexPath.row]
         cell.textLabel?.text = item
         
+     
+        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
+    {
+        if editingStyle == UITableViewCell.EditingStyle.delete
+                {
+                cellList.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+                saveData()
+                }
+    }
+//
     
     func saveData()
     {
